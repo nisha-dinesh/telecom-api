@@ -17,7 +17,7 @@ flowchart LR
     P --> DB[(PostgreSQL / SQLite)]
 ```
 
-## Run locally (Windows PowerShell)
+## Run locally (Windows)
 ```
 python -m venv venv
 venv\Scripts\activate
