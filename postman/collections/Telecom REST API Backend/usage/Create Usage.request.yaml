@@ -1,0 +1,59 @@
+$kind: http-request
+description: Staff/admin add usage. data_mb is calculated by the server.
+url: "{{baseUrl}}/usage"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "subscriber_id": 8442,
+      "usage_date": "1968-03-23T04:01:38.868Z",
+      "raw_value": 971749.9515350679,
+      "unit": "MB"
+    }
+  $type: |-
+    {
+      "description": "What the client sends to log data usage. NO data_mb here on purpose.",
+      "title": "UsageCreate",
+      "type": "object",
+      "properties": {
+        "subscriber_id": {
+          "type": "integer",
+          "title": "Subscriber Id"
+        },
+        "usage_date": {
+          "type": "string",
+          "title": "Usage Date",
+          "format": "date-time"
+        },
+        "raw_value": {
+          "type": "number",
+          "maximum": 1000000,
+          "title": "Raw Value"
+        },
+        "unit": {
+          "type": "string",
+          "enum": [
+            "MB",
+            "GB"
+          ],
+          "title": "Unit"
+        }
+      },
+      "required": [
+        "subscriber_id",
+        "usage_date",
+        "raw_value",
+        "unit"
+      ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Create Usage.resources/examples
+order: 1000

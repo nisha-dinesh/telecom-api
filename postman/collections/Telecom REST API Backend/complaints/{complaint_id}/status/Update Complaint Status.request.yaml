@@ -1,0 +1,59 @@
+$kind: http-request
+description: Staff/admin move a complaint along (the service refuses customers).
+url: "{{baseUrl}}/complaints/:complaint_id/status"
+method: PATCH
+headers:
+  Content-Type: application/json
+  Accept: application/json
+pathVariables:
+  - key: complaint_id
+    value: "1045"
+    disabled: false
+    description: ""
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "title": "Complaint Id",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "value"
+        ]
+      }
+body:
+  type: json
+  content: |-
+    {
+      "status": "open"
+    }
+  $type: |-
+    {
+      "description": "Staff changes the status of a complaint (open -> in_progress -> resolved...).",
+      "title": "ComplaintUpdate",
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "open",
+            "in_progress",
+            "resolved",
+            "closed"
+          ],
+          "title": "Status"
+        }
+      },
+      "required": [
+        "status"
+      ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Update Complaint Status.resources/examples
+order: 1000

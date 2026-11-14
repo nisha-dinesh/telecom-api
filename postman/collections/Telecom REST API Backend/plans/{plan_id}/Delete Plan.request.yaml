@@ -1,0 +1,34 @@
+$kind: http-request
+description: Deletes an unused plan, or only deactivates a plan that is already in use.
+url: "{{baseUrl}}/plans/:plan_id"
+method: DELETE
+headers:
+  Accept: application/json
+pathVariables:
+  - key: plan_id
+    value: "8423"
+    disabled: false
+    description: ""
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "title": "Plan Id",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "value"
+        ]
+      }
+body:
+  type: text
+  content: ""
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Delete Plan.resources/examples
+order: 3000

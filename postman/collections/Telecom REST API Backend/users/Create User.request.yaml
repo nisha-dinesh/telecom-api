@@ -1,0 +1,54 @@
+$kind: http-request
+description: Admin creates a staff/admin/user account.
+url: "{{baseUrl}}/users"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "937rAhgz@vvNPhLUmmwMP.pkul",
+      "password": "stringstring",
+      "role": "user"
+    }
+  $type: |-
+    {
+      "description": "Used ONLY by admins, to create staff or admin accounts.\nIt copies email + password from UserCreate and adds a role.",
+      "title": "UserCreateByAdmin",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "title": "Email",
+          "format": "email"
+        },
+        "password": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 72,
+          "title": "Password"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "admin",
+            "staff",
+            "user"
+          ],
+          "title": "Role"
+        }
+      },
+      "required": [
+        "email",
+        "password"
+      ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Create User.resources/examples
+order: 2000

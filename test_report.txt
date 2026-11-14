@@ -1,0 +1,84 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.13.17, pytest-9.2.0, pluggy-1.7.0
+rootdir: C:\Users\ASUS\Documents\telecom-api
+configfile: pytest.ini
+testpaths: tests
+plugins: anyio-4.16.0, cov-7.1.0
+collected 29 items
+
+tests\test_api.py .............                                          [ 44%]
+tests\test_hardening.py ....                                             [ 58%]
+tests\test_units.py ............                                         [100%]
+
+============================== warnings summary ===============================
+venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\ASUS\Documents\telecom-api\venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=============================== tests coverage ================================
+______________ coverage: platform win32, python 3.13.17-final-0 _______________
+
+Name                                 Stmts   Miss  Cover   Missing
+------------------------------------------------------------------
+app\__init__.py                          0      0   100%
+app\core\__init__.py                     0      0   100%
+app\core\config.py                       9      0   100%
+app\core\database.py                    15      4    73%   36-40
+app\core\deps.py                        36      0   100%
+app\core\exceptions.py                  21      0   100%
+app\core\limiter.py                      3      0   100%
+app\core\logging_config.py              18      0   100%
+app\core\security.py                    22      0   100%
+app\main.py                             66      2    97%   37-38
+app\models\__init__.py                   8      0   100%
+app\models\circle.py                     7      0   100%
+app\models\complaint.py                 16      0   100%
+app\models\plan.py                      17      0   100%
+app\models\plan_change.py               11      0   100%
+app\models\recharge.py                  15      0   100%
+app\models\subscriber.py                15      0   100%
+app\models\usage_record.py              13      0   100%
+app\models\user.py                      12      0   100%
+app\repositories\__init__.py             0      0   100%
+app\repositories\base.py                34      0   100%
+app\repositories\circle.py               9      0   100%
+app\repositories\complaint.py           30      0   100%
+app\repositories\plan.py                22      0   100%
+app\repositories\plan_change.py         10      0   100%
+app\repositories\recharge.py            22      0   100%
+app\repositories\subscriber.py          24      0   100%
+app\repositories\usage_record.py        30      0   100%
+app\repositories\user.py                 9      0   100%
+app\routers\__init__.py                  0      0   100%
+app\routers\admin.py                     8      0   100%
+app\routers\auth.py                     32      0   100%
+app\routers\circles.py                  24      0   100%
+app\routers\complaints.py               20      0   100%
+app\routers\helpers.py                  10      0   100%
+app\routers\plans.py                    25      0   100%
+app\routers\recharges.py                20      0   100%
+app\routers\subscribers.py              37      0   100%
+app\routers\usage.py                    21      0   100%
+app\schemas\__init__.py                  0      0   100%
+app\schemas\circle.py                    9      0   100%
+app\schemas\complaint.py                24      0   100%
+app\schemas\pagination.py               14      0   100%
+app\schemas\plan.py                     29      0   100%
+app\schemas\plan_change.py              11      0   100%
+app\schemas\recharge.py                 20      0   100%
+app\schemas\subscriber.py               26      0   100%
+app\schemas\usage_record.py             21      0   100%
+app\schemas\user.py                     25      0   100%
+app\services\__init__.py                 0      0   100%
+app\services\admin_service.py           26      0   100%
+app\services\auth_service.py            43      0   100%
+app\services\circle_service.py          36      0   100%
+app\services\complaint_service.py       43      0   100%
+app\services\plan_service.py            44      0   100%
+app\services\recharge_service.py        65      0   100%
+app\services\subscriber_service.py      95      0   100%
+app\services\usage_service.py           54      0   100%
+------------------------------------------------------------------
+TOTAL                                 1276      6    99%
+======================== 29 passed, 1 warning in 8.35s ========================

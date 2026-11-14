@@ -1,0 +1,67 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/complaints"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "subscriber_id": 3855,
+      "channel": "call_centre",
+      "category": "billing",
+      "description": "string"
+    }
+  $type: |-
+    {
+      "description": "What the client sends to raise a complaint.\nNo status / dedupe_key / linked_to_id: the service sets those.",
+      "title": "ComplaintCreate",
+      "type": "object",
+      "properties": {
+        "subscriber_id": {
+          "type": "integer",
+          "title": "Subscriber Id"
+        },
+        "channel": {
+          "type": "string",
+          "enum": [
+            "app",
+            "call_centre"
+          ],
+          "title": "Channel"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "network",
+            "billing",
+            "recharge_failed",
+            "plan",
+            "sim",
+            "other"
+          ],
+          "title": "Category"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 2000,
+          "title": "Description"
+        }
+      },
+      "required": [
+        "subscriber_id",
+        "channel",
+        "category",
+        "description"
+      ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Create Complaint.resources/examples
+order: 1000

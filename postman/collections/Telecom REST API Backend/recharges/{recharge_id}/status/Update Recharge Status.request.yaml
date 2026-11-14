@@ -1,0 +1,71 @@
+$kind: http-request
+description: Staff/admin record the payment result (the service refuses customers).
+url: "{{baseUrl}}/recharges/:recharge_id/status"
+method: PATCH
+headers:
+  Content-Type: application/json
+  Accept: application/json
+pathVariables:
+  - key: recharge_id
+    value: "4164"
+    disabled: false
+    description: ""
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "title": "Recharge Id",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "value"
+        ]
+      }
+body:
+  type: json
+  content: |-
+    {
+      "status": "successful",
+      "payment_reference": null
+    }
+  $type: |-
+    {
+      "description": "Staff (or the payment system) updates the result of a recharge.",
+      "title": "RechargeStatusUpdate",
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "successful",
+            "failed"
+          ],
+          "title": "Status"
+        },
+        "payment_reference": {
+          "title": "Payment Reference",
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status"
+      ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Update Recharge Status.resources/examples
+order: 1000

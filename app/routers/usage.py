@@ -36,10 +36,14 @@ def list_usage(
 
 
 @router.get("/summary/{subscriber_id}", response_model=UsageSummary)
-def usage_summary(subscriber_id: int, db: DbSession, user: CurrentUser):
-    """Total MB used by one number (MB and GB rows added in one unit)."""
-    return UsageService(db).summary(subscriber_id, user)
-
+def usage_summary(
+    subscriber_id: int,
+    db: DbSession,
+    user: CurrentUser,
+    date_from: datetime | None = None,
+    date_to: datetime | None = None,
+):
+    return UsageService(db).summary(subscriber_id, user, date_from, date_to)
 
 @router.get("/{usage_id}", response_model=UsageRead)
 def get_usage(usage_id: int, db: DbSession, user: CurrentUser):

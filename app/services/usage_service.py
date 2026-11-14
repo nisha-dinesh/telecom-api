@@ -83,12 +83,21 @@ class UsageService:
         )
         return self.usage.get_many(offset=offset, limit=limit, filters=filters)
 
-    def summary(self, subscriber_id: int, current_user: User) -> UsageSummary:
-        """Total MB used and number of records for one number."""
+    def summary(
+        self,
+        subscriber_id: int,
+        current_user: User,
+        date_from: datetime | None = None,
+        date_to: datetime | None = None,
+    ) -> UsageSummary:
+        """Total MB used and number of records for one number (optional date range)."""
         self._get_subscriber(subscriber_id, current_user)  # ownership check
-        total_mb, count = self.usage.total_mb_for_subscriber(subscriber_id)
+        total_mb, count = self.usage.total_mb_for_subscriber(
+            subscriber_id,
+            _naive_utc(date_from) if date_from else None,
+            _naive_utc(date_to) if date_to else None,
+        )
         return UsageSummary(subscriber_id=subscriber_id, total_mb=total_mb, record_count=count)
-
     # ---------- write ----------
 
     def create(self, data: UsageCreate, current_user: User) -> UsageRecord:

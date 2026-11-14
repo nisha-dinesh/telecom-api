@@ -8,6 +8,7 @@ import time
 import uuid
 from contextlib import asynccontextmanager
 
+
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
@@ -21,7 +22,7 @@ from app.core.database import Base, engine
 from app.core.exceptions import AppError
 from app.core.limiter import limiter
 from app.core.logging_config import setup_logging
-from app.routers import auth, circles, complaints, plans, recharges, subscribers, usage
+from app.routers import admin, auth, circles, complaints, plans, recharges, subscribers, usage
 
 setup_logging()
 request_log = logging.getLogger("app.request")
@@ -149,7 +150,7 @@ async def handle_unexpected_error(request: Request, exc: Exception):
 
 
 # ---------- routers ----------
-for router_module in (auth, circles, plans, subscribers, recharges, usage, complaints):
+for router_module in (admin, auth, circles, plans, subscribers, recharges, usage, complaints):
     app.include_router(router_module.router)
 
 

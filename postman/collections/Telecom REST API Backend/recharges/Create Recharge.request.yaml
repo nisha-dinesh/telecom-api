@@ -1,0 +1,41 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/recharges"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "subscriber_id": 4354,
+      "plan_id": 4328
+    }
+  $type: |-
+    {
+      "description": "What the client sends to recharge: only WHO and WHICH PLAN.\nNo amount, no status, no payment_reference: the server decides those.",
+      "title": "RechargeCreate",
+      "type": "object",
+      "properties": {
+        "subscriber_id": {
+          "type": "integer",
+          "title": "Subscriber Id"
+        },
+        "plan_id": {
+          "type": "integer",
+          "title": "Plan Id"
+        }
+      },
+      "required": [
+        "subscriber_id",
+        "plan_id"
+      ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Create Recharge.resources/examples
+order: 1000

@@ -1,0 +1,92 @@
+$kind: http-request
+description: Search by name or number; filter by status, circle, plan.
+url: "{{baseUrl}}/subscribers?page=1&page_size=10&search=string&status=active&circle_id=4090&plan_id=4090"
+method: GET
+headers:
+  Accept: application/json
+queryParams:
+  - key: page
+    value: "1"
+    disabled: false
+    description: ""
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "title": "Page",
+            "type": "integer",
+            "default": 1,
+            "minimum": 1
+          }
+        }
+      }
+  - key: page_size
+    value: "10"
+    disabled: false
+    description: ""
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "title": "Page Size",
+            "type": "integer",
+            "default": 10,
+            "minimum": 1,
+            "maximum": 100
+          }
+        }
+      }
+  - key: search
+    value: string
+    disabled: false
+    description: ""
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "maxLength": 100
+          }
+        }
+      }
+  - key: status
+    value: active
+    disabled: false
+    description: ""
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "enum": [
+              "active",
+              "inactive",
+              "ported_out"
+            ]
+          }
+        }
+      }
+  - key: circle_id
+    value: "4090"
+    disabled: false
+    description: ""
+    $type: integer
+  - key: plan_id
+    value: "4090"
+    disabled: false
+    description: ""
+    $type: integer
+body:
+  type: text
+  content: ""
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/List Subscribers.resources/examples
+order: 2000

@@ -1,0 +1,138 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/plans/:plan_id"
+method: PATCH
+headers:
+  Content-Type: application/json
+  Accept: application/json
+pathVariables:
+  - key: plan_id
+    value: "8423"
+    disabled: false
+    description: ""
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "title": "Plan Id",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "value"
+        ]
+      }
+body:
+  type: json
+  content: |-
+    {
+      "name": null,
+      "price": "string",
+      "validity_days": null,
+      "data_mb_per_day": 6954,
+      "voice_minutes": 3954,
+      "sms": null,
+      "is_active": null
+    }
+  $type: |-
+    {
+      "description": "What the client sends to change a plan. Every field is optional,\nso the client sends only what they want to change.",
+      "title": "PlanUpdate",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "price": {
+          "title": "Price",
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "validity_days": {
+          "title": "Validity Days",
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data_mb_per_day": {
+          "title": "Data Mb Per Day",
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "voice_minutes": {
+          "title": "Voice Minutes",
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sms": {
+          "title": "Sms",
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "is_active": {
+          "title": "Is Active",
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Update Plan.resources/examples
+order: 2000

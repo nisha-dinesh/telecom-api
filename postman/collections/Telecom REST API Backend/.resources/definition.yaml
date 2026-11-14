@@ -1,0 +1,4 @@
+$kind: collection
+description: Prepaid plan comparison and recharge backend for a fictional Ahmedabad MVNO.
+variables:
+  baseUrl: /

@@ -1,7 +1,10 @@
 # app/routers/subscribers.py
 # Job of this file: subscriber endpoints. Customers only ever see their own numbers
 # (the service enforces it); staff/admin see everyone.
+from datetime import datetime
 
+from app.schemas.usage_record import UsageSummary
+from app.services.usage_service import UsageService
 from typing import Annotated
 
 from fastapi import APIRouter, Query
@@ -71,3 +74,14 @@ def change_plan(
 @router.get("/{subscriber_id}/plan-history", response_model=list[PlanChangeRead])
 def plan_history(subscriber_id: int, db: DbSession, user: CurrentUser):
     return SubscriberService(db).plan_history(subscriber_id, user)
+
+@router.get("/{subscriber_id}/usage", response_model=UsageSummary)
+def subscriber_usage(
+    subscriber_id: int,
+    db: DbSession,
+    user: CurrentUser,
+    date_from: datetime | None = None,
+    date_to: datetime | None = None,
+):
+    """Total usage in MB for one number, optionally between two dates."""
+    return UsageService(db).summary(subscriber_id, user, date_from, date_to)

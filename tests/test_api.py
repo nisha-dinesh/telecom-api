@@ -361,3 +361,29 @@ def test_complaint_duplicates_filters_and_rules(client, auth, customer, other, s
     assert client.get(f"/complaints/{fid}", headers=c).status_code == 200
     assert client.get(f"/complaints/{fid}", headers=o).status_code == 404
     assert client.get("/complaints/9999", headers=s).status_code == 404
+def test_fix_ported_out_cleans_messy_numbers(client, auth, admin, staff, customer, catalog):
+    sub_id = make_sub(client, auth(customer), catalog).json()["id"]
+    rid = client.post("/recharges", json={"subscriber_id": sub_id, "plan_id": catalog["mega"]}, headers=auth(customer)).json()["id"]
+    client.patch(f"/subscribers/{sub_id}", json={"status": "ported_out"}, headers=auth(staff))
+
+    assert client.post("/admin/subscribers/fix-ported-out", headers=auth(staff)).status_code == 403
+    r = client.post("/admin/subscribers/fix-ported-out", headers=auth(admin))
+    assert r.json() == {"fixed": 1, "pending_recharges_failed": 1}
+    assert client.get(f"/subscribers/{sub_id}", headers=auth(staff)).json()["plan_id"] is None
+    assert client.get(f"/recharges/{rid}", headers=auth(staff)).json()["status"] == "failed"
+    # Running it again changes nothing.
+    assert client.post("/admin/subscribers/fix-ported-out", headers=auth(admin)).json() == {"fixed": 0, "pending_recharges_failed": 0}
+    # A ported-out number never shows up as active.
+    assert client.get("/subscribers?status=active", headers=auth(staff)).json()["total"] == 0
+
+
+def test_subscriber_usage_with_date_range(client, auth, customer, other, staff, catalog):
+    sub_id = make_sub(client, auth(customer), catalog).json()["id"]
+    for ago, value, unit in [(5, 1, "GB"), (1, 500, "MB")]:
+        body = {"subscriber_id": sub_id, "usage_date": iso_ago(ago), "raw_value": value, "unit": unit}
+        assert client.post("/usage", json=body, headers=auth(staff)).status_code == 201
+    r = client.get(f"/subscribers/{sub_id}/usage", headers=auth(customer))
+    assert r.json()["total_mb"] == 1524.0  # 1 GB (1024 MB) + 500 MB
+    r = client.get(f"/subscribers/{sub_id}/usage", params={"date_from": iso_ago(2)}, headers=auth(customer))
+    assert r.json()["total_mb"] == 500.0
+    assert client.get(f"/subscribers/{sub_id}/usage", headers=auth(other)).status_code == 404

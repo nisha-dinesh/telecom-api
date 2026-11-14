@@ -1,0 +1,157 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/plans?page=1&page_size=10&search=string&min_price=363.66687222997405&max_price=363.66687222997405&min_data_mb=7171&is_active=true"
+  method: GET
+  headers:
+    - key: Accept
+      value: application/json
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  queryParams:
+    page: "1"
+    page_size: "10"
+    search: string
+    min_price: "363.66687222997405"
+    max_price: "363.66687222997405"
+    min_data_mb: "7171"
+    is_active: "true"
+  body:
+    type: text
+    content: ""
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "items": [
+          {
+            "id": 709,
+            "name": "string",
+            "price": "string",
+            "validity_days": 1180,
+            "data_mb_per_day": 8318,
+            "voice_minutes": null,
+            "sms": 4794,
+            "is_active": false,
+            "created_at": "1972-03-05T13:58:36.089Z"
+          },
+          {
+            "id": 6741,
+            "name": "string",
+            "price": "string",
+            "validity_days": 3213,
+            "data_mb_per_day": 5032,
+            "voice_minutes": 3330,
+            "sms": null,
+            "is_active": true,
+            "created_at": "1985-12-06T03:38:12.184Z"
+          }
+        ],
+        "total": 6955,
+        "page": 1129,
+        "page_size": 5564
+      }
+    $type: |-
+      {
+        "title": "Page[PlanRead]",
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "title": "Items",
+            "items": {
+              "description": "What we send back to the client.",
+              "title": "PlanRead",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "title": "Id"
+                },
+                "name": {
+                  "type": "string",
+                  "title": "Name"
+                },
+                "price": {
+                  "type": "string",
+                  "title": "Price"
+                },
+                "validity_days": {
+                  "type": "integer",
+                  "title": "Validity Days"
+                },
+                "data_mb_per_day": {
+                  "type": "integer",
+                  "title": "Data Mb Per Day"
+                },
+                "voice_minutes": {
+                  "title": "Voice Minutes",
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "sms": {
+                  "title": "Sms",
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "is_active": {
+                  "type": "boolean",
+                  "title": "Is Active"
+                },
+                "created_at": {
+                  "type": "string",
+                  "title": "Created At",
+                  "format": "date-time"
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "price",
+                "validity_days",
+                "data_mb_per_day",
+                "voice_minutes",
+                "sms",
+                "is_active",
+                "created_at"
+              ]
+            }
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "page_size": {
+            "type": "integer",
+            "title": "Page Size"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "page_size"
+        ]
+      }
+order: 1000

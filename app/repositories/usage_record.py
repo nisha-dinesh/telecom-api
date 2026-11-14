@@ -43,13 +43,21 @@ class UsageRecordRepository(BaseRepository[UsageRecord]):
 
         return conditions
 
-    def total_mb_for_subscriber(self, subscriber_id: int) -> tuple[float, int]:
-        """Return (total MB used, number of records) for one subscriber.
-        coalesce(..., 0.0) = use 0 if the subscriber has no records at all."""
-        row = self.db.execute(
-            select(
-                func.coalesce(func.sum(UsageRecord.data_mb), 0.0),
-                func.count(UsageRecord.id),
-            ).where(UsageRecord.subscriber_id == subscriber_id)
-        ).one()
+    def total_mb_for_subscriber(
+        self,
+        subscriber_id: int,
+        date_from: datetime | None = None,
+        date_to: datetime | None = None,
+    ) -> tuple[float, int]:
+        """Return (total MB, record count), optionally only between two dates."""
+        conditions = self.build_filters(
+            subscriber_id=subscriber_id, date_from=date_from, date_to=date_to
+        )
+        query = select(
+            func.coalesce(func.sum(UsageRecord.data_mb), 0.0),
+            func.count(UsageRecord.id),
+        )
+        for condition in conditions:
+            query = query.where(condition)
+        row = self.db.execute(query).one()
         return float(row[0]), int(row[1])

@@ -1,0 +1,134 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/recharges?page=1&page_size=10&subscriber_id=4090&plan_id=4090&status=pending"
+  method: GET
+  headers:
+    - key: Accept
+      value: application/json
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  queryParams:
+    page: "1"
+    page_size: "10"
+    subscriber_id: "4090"
+    plan_id: "4090"
+    status: pending
+  body:
+    type: text
+    content: ""
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "items": [
+          {
+            "id": 92,
+            "subscriber_id": 7099,
+            "plan_id": 112,
+            "amount": "string",
+            "status": "string",
+            "payment_reference": null,
+            "created_at": "1993-10-15T04:24:50.415Z"
+          },
+          {
+            "id": 5498,
+            "subscriber_id": 7325,
+            "plan_id": 8803,
+            "amount": "string",
+            "status": "string",
+            "payment_reference": "string",
+            "created_at": "1975-06-16T10:38:42.644Z"
+          }
+        ],
+        "total": 7881,
+        "page": 7105,
+        "page_size": 6420
+      }
+    $type: |-
+      {
+        "title": "Page[RechargeRead]",
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "title": "Items",
+            "items": {
+              "description": "What we send back to the client.",
+              "title": "RechargeRead",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "title": "Id"
+                },
+                "subscriber_id": {
+                  "type": "integer",
+                  "title": "Subscriber Id"
+                },
+                "plan_id": {
+                  "type": "integer",
+                  "title": "Plan Id"
+                },
+                "amount": {
+                  "type": "string",
+                  "title": "Amount"
+                },
+                "status": {
+                  "type": "string",
+                  "title": "Status"
+                },
+                "payment_reference": {
+                  "title": "Payment Reference",
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "created_at": {
+                  "type": "string",
+                  "title": "Created At",
+                  "format": "date-time"
+                }
+              },
+              "required": [
+                "id",
+                "subscriber_id",
+                "plan_id",
+                "amount",
+                "status",
+                "payment_reference",
+                "created_at"
+              ]
+            }
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "page_size": {
+            "type": "integer",
+            "title": "Page Size"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "page_size"
+        ]
+      }
+order: 1000

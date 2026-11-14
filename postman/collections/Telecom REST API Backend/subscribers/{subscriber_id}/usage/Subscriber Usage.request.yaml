@@ -1,0 +1,63 @@
+$kind: http-request
+description: Total usage in MB for one number, optionally between two dates.
+url: "{{baseUrl}}/subscribers/:subscriber_id/usage?date_from=1999-12-31T18:42:21.117Z&date_to=1999-12-31T18:42:21.117Z"
+method: GET
+headers:
+  Accept: application/json
+queryParams:
+  - key: date_from
+    value: 1999-12-31T18:42:21.117Z
+    disabled: false
+    description: ""
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+  - key: date_to
+    value: 1999-12-31T18:42:21.117Z
+    disabled: false
+    description: ""
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+pathVariables:
+  - key: subscriber_id
+    value: "9085"
+    disabled: false
+    description: ""
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "title": "Subscriber Id",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "value"
+        ]
+      }
+body:
+  type: text
+  content: ""
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Subscriber Usage.resources/examples
+order: 1000
