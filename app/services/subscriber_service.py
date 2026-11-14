@@ -167,12 +167,11 @@ class SubscriberService:
         return subscriber
 
     def delete(self, subscriber_id: int, current_user: User) -> Subscriber:
-        if self._is_customer(current_user):
-            self.get(subscriber_id, current_user)
-            raise ForbiddenError("Only staff or admin can delete subscribers")
-
+        # Ownership first: another customer's number gives 404, so ids can't be probed.
         subscriber = self.get(subscriber_id, current_user)
-
+        if self._is_customer(current_user):
+            raise ForbiddenError("Only staff or admin can edit subscribers")
+        
         if subscriber.status == "ported_out":
             return subscriber
 
